@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Costos Floricultura | Vibras Positivas ✨</title>
+    <style>
+        :root {
+            --verde: #27ae60;
+            --negro: #0a0a0a;
+            --tarjeta: #1a1a1a;
+            --texto: #ffffff;
+            --dorado: #f1c40f;
+            --rojo: #e74c3c;
+        }
+
+        body {
+            font-family: -apple-system, system-ui, sans-serif;
+            background-color: var(--negro);
+            color: var(--texto);
+            margin: 0;
+            padding-top: 100px;
+        }
+
+        /* HEADER */
+        header {
+            background: rgba(0, 0, 0, 0.95);
+            padding: 10px 5%;
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 2000;
+            border-bottom: 3px solid var(--verde);
+        }
+
+        .logo { font-size: 1.2rem; font-weight: bold; }
+        .logo span { color: var(--dorado); }
+
+        .reloj-col { text-align: right; line-height: 1.2; }
+        #hora { font-size: 1.1rem; font-weight: bold; color: var(--dorado); display: block; }
+        #fecha { font-size: 0.7rem; color: #bbb; }
+
+        /* CALCULADORA */
+        .contenedor { padding: 20px 5%; max-width: 600px; margin: auto; }
+        
+        .card {
+            background: var(--tarjeta);
+            padding: 20px;
+            border-radius: 15px;
+            border: 1px solid #333;
+        }
+
+        h2 { color: var(--verde); text-align: center; margin-top: 0; }
+
+        .grupo-input { margin-bottom: 15px; }
+        label { display: block; font-size: 0.9rem; margin-bottom: 5px; color: var(--dorado); }
+        
+        input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #444;
+            background: #111;
+            color: white;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+
+        .resultado-box {
+            margin-top: 20px;
+            padding: 15px;
+            background: #222;
+            border-radius: 10px;
+            border-left: 5px solid var(--verde);
+        }
+
+        .total { font-size: 1.4rem; font-weight: bold; color: var(--verde); }
+        
+        .btn-calc {
+            width: 100%;
+            background: var(--verde);
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">✨ Vibras <span>Positivas</span></div>
+        <div class="reloj-col">
+            <span id="fecha">...</span>
+            <span id="hora">00:00:00</span>
+        </div>
+    </header>
+
+    <div class="contenedor">
+        <div class="card">
+            <h2>Calculadora de Costos Florales</h2>
+            
+            <div class="grupo-input">
+                <label>Mano de Obra (Jornales/Mes):</label>
+                <input type="number" id="manoObra" placeholder="$ Valor total COP" oninput="calcular()">
+            </div>
+
+            <div class="grupo-input">
+                <label>Insumos (Fertilizantes/Pesticidas):</label>
+                <input type="number" id="insumos" placeholder="$ Valor total COP" oninput="calcular()">
+            </div>
+
+            <div class="grupo-input">
+                <label>Empaque y Postcosecha:</label>
+                <input type="number" id="empaque" placeholder="$ Valor total COP" oninput="calcular()">
+            </div>
+
+            <div class="grupo-input">
+                <label>Logística y Transporte (Exportación):</label>
+                <input type="number" id="logistica" placeholder="$ Valor total COP" oninput="calcular()">
+            </div>
+
+            <div class="resultado-box">
+                <div style="font-size: 0.9rem;">Costo Total Estimado:</div>
+                <div id="totalCostos" class="total">$ 0</div>
+            </div>
+            
+            <p style="font-size: 0.7rem; color: #888; margin-top: 15px; text-align: center;">
+                * Valores sugeridos para el mercado colombiano (COP).
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // RELOJ COLOMBIA
+        function actualizarReloj() {
+            const ahora = new Date();
+            const h = ahora.toLocaleTimeString('es-CO', { timeZone: 'America/Bogota', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
+            const f = ahora.toLocaleDateString('es-CO', { timeZone: 'America/Bogota', weekday: 'short', day: 'numeric', month: 'short' });
+            document.getElementById('hora').innerText = h;
+            document.getElementById('fecha').innerText = f;
+        }
+        setInterval(actualizarReloj, 1000);
+        actualizarReloj();
+
+        // LÓGICA DE CÁLCULO
+        function calcular() {
+            const v1 = parseFloat(document.getElementById('manoObra').value) || 0;
+            const v2 = parseFloat(document.getElementById('insumos').value) || 0;
+            const v3 = parseFloat(document.getElementById('empaque').value) || 0;
+            const v4 = parseFloat(document.getElementById('logistica').value) || 0;
+
+            const total = v1 + v2 + v3 + v4;
+            
+            document.getElementById('totalCostos').innerText = '$ ' + total.toLocaleString('es-CO');
+        }
+    </script>
+</body>
+</html>
