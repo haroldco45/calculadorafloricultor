@@ -2,163 +2,213 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Costos Floricultura | Vibras Positivas ✨</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Floricultora | Fenalco Antioquia</title>
     <style>
         :root {
-            --verde: #27ae60;
-            --negro: #0a0a0a;
-            --tarjeta: #1a1a1a;
-            --texto: #ffffff;
+            --verde-fenalco: #1a7a3a;
+            --azul-oscuro: #0a1f33;
             --dorado: #f1c40f;
-            --rojo: #e74c3c;
+            --blanco: #ffffff;
+            --gris-claro: #f4f4f4;
         }
 
         body {
-            font-family: -apple-system, system-ui, sans-serif;
-            background-color: var(--negro);
-            color: var(--texto);
+            font-family: 'Segoe UI', Tahoma, sans-serif;
             margin: 0;
-            padding-top: 100px;
+            padding-top: 120px;
+            background-color: var(--gris-claro);
+            color: var(--azul-oscuro);
         }
 
-        /* HEADER */
+        /* HEADER INSTITUCIONAL */
         header {
-            background: rgba(0, 0, 0, 0.95);
-            padding: 10px 5%;
+            background-color: var(--azul-oscuro);
+            color: var(--blanco);
+            padding: 15px 5%;
             position: fixed;
             top: 0; left: 0; right: 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
             z-index: 2000;
-            border-bottom: 3px solid var(--verde);
+            border-bottom: 4px solid var(--verde-fenalco);
         }
 
-        .logo { font-size: 1.2rem; font-weight: bold; }
-        .logo span { color: var(--dorado); }
+        .reloj-col { text-align: right; }
+        #hora { font-size: 1.2rem; font-weight: bold; color: var(--dorado); display: block; }
+        #fecha { font-size: 0.8rem; }
 
-        .reloj-col { text-align: right; line-height: 1.2; }
-        #hora { font-size: 1.1rem; font-weight: bold; color: var(--dorado); display: block; }
-        #fecha { font-size: 0.7rem; color: #bbb; }
+        /* CONTENEDOR PRINCIPAL */
+        .container { max-width: 800px; margin: auto; padding: 20px; }
 
-        /* CALCULADORA */
-        .contenedor { padding: 20px 5%; max-width: 600px; margin: auto; }
-        
         .card {
-            background: var(--tarjeta);
-            padding: 20px;
+            background: var(--blanco);
+            padding: 30px;
             border-radius: 15px;
-            border: 1px solid #333;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
 
-        h2 { color: var(--verde); text-align: center; margin-top: 0; }
+        .selector-negocio {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
 
-        .grupo-input { margin-bottom: 15px; }
-        label { display: block; font-size: 0.9rem; margin-bottom: 5px; color: var(--dorado); }
-        
-        input {
+        .btn-tipo {
+            padding: 10px;
+            border: 2px solid var(--verde-fenalco);
+            background: transparent;
+            cursor: pointer;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .btn-tipo.active {
+            background: var(--verde-fenalco);
+            color: white;
+        }
+
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; font-size: 0.9rem; }
+        input, select {
             width: 100%;
             padding: 12px;
-            border-radius: 8px;
-            border: 1px solid #444;
-            background: #111;
-            color: white;
-            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 6px;
             box-sizing: border-box;
         }
 
-        .resultado-box {
-            margin-top: 20px;
-            padding: 15px;
-            background: #222;
+        .resultado {
+            margin-top: 25px;
+            padding: 20px;
+            background: var(--azul-oscuro);
+            color: var(--blanco);
             border-radius: 10px;
-            border-left: 5px solid var(--verde);
+            text-align: center;
         }
 
-        .total { font-size: 1.4rem; font-weight: bold; color: var(--verde); }
-        
-        .btn-calc {
-            width: 100%;
-            background: var(--verde);
-            color: white;
-            padding: 15px;
-            border: none;
-            border-radius: 8px;
-            font-weight: bold;
-            font-size: 1.1rem;
-            cursor: pointer;
-            margin-top: 10px;
+        #total-final { font-size: 2rem; color: var(--dorado); display: block; }
+
+        .manual-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: var(--verde-fenalco);
+            text-decoration: none;
+            font-size: 0.9rem;
         }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="logo">✨ Vibras <span>Positivas</span></div>
+        <div>
+            <strong style="font-size: 1.2rem;">✨ Vibras Positivas</strong><br>
+            <small>Soluciones Floricultoras</small>
+        </div>
         <div class="reloj-col">
             <span id="fecha">...</span>
             <span id="hora">00:00:00</span>
+            <small style="color: var(--verde-fenalco)">Hora Legal Colombia</small>
         </div>
     </header>
 
-    <div class="contenedor">
+    <div class="container">
         <div class="card">
-            <h2>Calculadora de Costos Florales</h2>
+            <h2 style="text-align:center; color: var(--verde-fenalco);">Calculadora de Costos Especializada</h2>
             
-            <div class="grupo-input">
-                <label>Mano de Obra (Jornales/Mes):</label>
-                <input type="number" id="manoObra" placeholder="$ Valor total COP" oninput="calcular()">
+            <p><strong>1. Seleccione su modelo de negocio:</strong></p>
+            <div class="selector-negocio">
+                <button class="btn-tipo active" onclick="setNegocio('productor', this)">Productor</button>
+                <button class="btn-tipo" onclick="setNegocio('comercializador', this)">Comercializador</button>
+                <button class="btn-tipo" onclick="setNegocio('mixto', this)">Mixto</button>
             </div>
 
-            <div class="grupo-input">
-                <label>Insumos (Fertilizantes/Pesticidas):</label>
-                <input type="number" id="insumos" placeholder="$ Valor total COP" oninput="calcular()">
+            <hr>
+
+            <div class="form-group">
+                <label>Tipo de Flor:</label>
+                <select id="tipo-flor">
+                    <option value="1.2">Rosa</option>
+                    <option value="1.0">Clavel</option>
+                </select>
             </div>
 
-            <div class="grupo-input">
-                <label>Empaque y Postcosecha:</label>
-                <input type="number" id="empaque" placeholder="$ Valor total COP" oninput="calcular()">
+            <div class="form-group">
+                <label>Tamaño:</label>
+                <select id="tamano-flor">
+                    <option value="1.0">Estándar (Corto)</option>
+                    <option value="1.5">Premium (Largo)</option>
+                </select>
             </div>
 
-            <div class="grupo-input">
-                <label>Logística y Transporte (Exportación):</label>
-                <input type="number" id="logistica" placeholder="$ Valor total COP" oninput="calcular()">
+            <div id="campos-costos">
+                <div class="form-group">
+                    <label id="label-dinamico">Costos de Producción/Adquisición (COP):</label>
+                    <input type="number" id="costo-base" placeholder="0" oninput="calcular()">
+                </div>
+                <div class="form-group">
+                    <label>Gastos Logísticos y Operativos:</label>
+                    <input type="number" id="costo-operativo" placeholder="0" oninput="calcular()">
+                </div>
             </div>
 
-            <div class="resultado-box">
-                <div style="font-size: 0.9rem;">Costo Total Estimado:</div>
-                <div id="totalCostos" class="total">$ 0</div>
+            <div class="resultado">
+                <span>Costo Total de Operación</span>
+                <span id="total-final">$ 0.00</span>
             </div>
-            
-            <p style="font-size: 0.7rem; color: #888; margin-top: 15px; text-align: center;">
-                * Valores sugeridos para el mercado colombiano (COP).
-            </p>
+
+            <a href="#" class="manual-link" onclick="alert('Manual de Usuario:\n1. Seleccione su tipo de empresa.\n2. Elija la flor y el tamaño.\n3. Ingrese los valores solicitados.\n4. El sistema calculará automáticamente ajustando por variables de insumos.')">
+                📖 Ver Manual de Usuario (Digital)
+            </a>
         </div>
     </div>
 
     <script>
+        let negocioActual = 'productor';
+
         // RELOJ COLOMBIA
         function actualizarReloj() {
             const ahora = new Date();
             const h = ahora.toLocaleTimeString('es-CO', { timeZone: 'America/Bogota', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
-            const f = ahora.toLocaleDateString('es-CO', { timeZone: 'America/Bogota', weekday: 'short', day: 'numeric', month: 'short' });
+            const f = ahora.toLocaleDateString('es-CO', { timeZone: 'America/Bogota', weekday: 'long', day: 'numeric', month: 'short' });
             document.getElementById('hora').innerText = h;
             document.getElementById('fecha').innerText = f;
         }
         setInterval(actualizarReloj, 1000);
         actualizarReloj();
 
-        // LÓGICA DE CÁLCULO
-        function calcular() {
-            const v1 = parseFloat(document.getElementById('manoObra').value) || 0;
-            const v2 = parseFloat(document.getElementById('insumos').value) || 0;
-            const v3 = parseFloat(document.getElementById('empaque').value) || 0;
-            const v4 = parseFloat(document.getElementById('logistica').value) || 0;
-
-            const total = v1 + v2 + v3 + v4;
+        // CAMBIO DE MODELO DE NEGOCIO
+        function setNegocio(tipo, btn) {
+            negocioActual = tipo;
+            document.querySelectorAll('.btn-tipo').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
             
-            document.getElementById('totalCostos').innerText = '$ ' + total.toLocaleString('es-CO');
+            const label = document.getElementById('label-dinamico');
+            if(tipo === 'productor') label.innerText = "Costos de Cultivo e Insumos:";
+            if(tipo === 'comercializador') label.innerText = "Costo de Compra a Proveedor:";
+            if(tipo === 'mixto') label.innerText = "Costos Integrados (Producción + Compra):";
+            
+            calcular();
+        }
+
+        // LÓGICA DE CÁLCULO CUSTOMIZABLE
+        function calcular() {
+            const costoBase = parseFloat(document.getElementById('costo-base').value) || 0;
+            const costoOp = parseFloat(document.getElementById('costo-operativo').value) || 0;
+            const factorFlor = parseFloat(document.getElementById('tipo-flor').value);
+            const factorTamano = parseFloat(document.getElementById('tamano-flor').value);
+
+            // Algoritmo ajustable
+            let subtotal = (costoBase * factorFlor * factorTamano) + costoOp;
+            
+            // Ajuste por modelo de negocio
+            if(negocioActual === 'mixto') subtotal *= 1.05; // Margen de complejidad mixta
+
+            document.getElementById('total-final').innerText = '$ ' + subtotal.toLocaleString('es-CO', {minimumFractionDigits: 2});
         }
     </script>
 </body>
