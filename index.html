@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Costos Floricultura | Vibras Positivas ✨</title>
+    <title>Costos Operativos | Distrileco ✨</title>
     <style>
         :root {
-            --verde: #27ae60;
+            --primario: #27ae60;
             --negro: #0a0a0a;
             --tarjeta: #1a1a1a;
             --texto: #ffffff;
@@ -22,7 +22,6 @@
             padding-top: 100px;
         }
 
-        /* HEADER */
         header {
             background: rgba(0, 0, 0, 0.95);
             padding: 10px 5%;
@@ -32,34 +31,34 @@
             justify-content: space-between;
             align-items: center;
             z-index: 2000;
-            border-bottom: 3px solid var(--verde);
+            border-bottom: 3px solid var(--primario);
         }
 
-        .logo { font-size: 1.2rem; font-weight: bold; }
+        .logo { font-size: 1.1rem; font-weight: bold; }
         .logo span { color: var(--dorado); }
 
         .reloj-col { text-align: right; line-height: 1.2; }
         #hora { font-size: 1.1rem; font-weight: bold; color: var(--dorado); display: block; }
         #fecha { font-size: 0.7rem; color: #bbb; }
 
-        /* CALCULADORA */
-        .contenedor { padding: 20px 5%; max-width: 600px; margin: auto; }
+        .contenedor { padding: 20px 5%; max-width: 700px; margin: auto; }
         
         .card {
             background: var(--tarjeta);
             padding: 20px;
             border-radius: 15px;
             border: 1px solid #333;
+            margin-bottom: 20px;
         }
 
-        h2 { color: var(--verde); text-align: center; margin-top: 0; }
+        h2 { color: var(--primario); font-size: 1.2rem; margin-top: 0; border-bottom: 1px solid #333; padding-bottom: 10px; }
 
-        .grupo-input { margin-bottom: 15px; }
-        label { display: block; font-size: 0.9rem; margin-bottom: 5px; color: var(--dorado); }
+        .grupo-input { margin-bottom: 12px; }
+        label { display: block; font-size: 0.85rem; margin-bottom: 5px; color: var(--gris); }
         
         input {
             width: 100%;
-            padding: 12px;
+            padding: 10px;
             border-radius: 8px;
             border: 1px solid #444;
             background: #111;
@@ -69,27 +68,17 @@
         }
 
         .resultado-box {
-            margin-top: 20px;
-            padding: 15px;
+            position: sticky;
+            bottom: 20px;
             background: #222;
-            border-radius: 10px;
-            border-left: 5px solid var(--verde);
+            padding: 20px;
+            border-radius: 15px;
+            border: 2px solid var(--primario);
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.5);
         }
 
-        .total { font-size: 1.4rem; font-weight: bold; color: var(--verde); }
-        
-        .btn-calc {
-            width: 100%;
-            background: var(--verde);
-            color: white;
-            padding: 15px;
-            border: none;
-            border-radius: 8px;
-            font-weight: bold;
-            font-size: 1.1rem;
-            cursor: pointer;
-            margin-top: 10px;
-        }
+        .total-label { font-size: 0.9rem; color: var(--dorado); text-transform: uppercase; letter-spacing: 1px; }
+        .total-valor { font-size: 1.8rem; font-weight: bold; color: var(--primario); }
     </style>
 </head>
 <body>
@@ -103,38 +92,48 @@
     </header>
 
     <div class="contenedor">
+        
         <div class="card">
-            <h2>Calculadora de Costos Florales</h2>
-            
+            <h2>1. Mano de Obra (Personal)</h2>
             <div class="grupo-input">
-                <label>Mano de Obra (Jornales/Mes):</label>
-                <input type="number" id="manoObra" placeholder="$ Valor total COP" oninput="calcular()">
+                <label>Salarios Base (Conductores/Auxiliares):</label>
+                <input type="number" class="calc" id="salarios" placeholder="0">
             </div>
-
             <div class="grupo-input">
-                <label>Insumos (Fertilizantes/Pesticidas):</label>
-                <input type="number" id="insumos" placeholder="$ Valor total COP" oninput="calcular()">
+                <label>Prestaciones y Seguridad Social:</label>
+                <input type="number" class="calc" id="prestaciones" placeholder="0">
             </div>
-
-            <div class="grupo-input">
-                <label>Empaque y Postcosecha:</label>
-                <input type="number" id="empaque" placeholder="$ Valor total COP" oninput="calcular()">
-            </div>
-
-            <div class="grupo-input">
-                <label>Logística y Transporte (Exportación):</label>
-                <input type="number" id="logistica" placeholder="$ Valor total COP" oninput="calcular()">
-            </div>
-
-            <div class="resultado-box">
-                <div style="font-size: 0.9rem;">Costo Total Estimado:</div>
-                <div id="totalCostos" class="total">$ 0</div>
-            </div>
-            
-            <p style="font-size: 0.7rem; color: #888; margin-top: 15px; text-align: center;">
-                * Valores sugeridos para el mercado colombiano (COP).
-            </p>
         </div>
+
+        <div class="card">
+            <h2>2. Insumos y Vehículos</h2>
+            <div class="grupo-input">
+                <label>Combustible Mensual (ACPM/Gas):</label>
+                <input type="number" class="calc" id="combustible" placeholder="0">
+            </div>
+            <div class="grupo-input">
+                <label>Mantenimientos (Aceite, Llantas, etc):</label>
+                <input type="number" class="calc" id="mantenimiento" placeholder="0">
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>3. Bodega y Operación</h2>
+            <div class="grupo-input">
+                <label>Arrendamientos y Servicios Públicos:</label>
+                <input type="number" class="calc" id="servicios" placeholder="0">
+            </div>
+            <div class="grupo-input">
+                <label>Empaques y Etiquetas (Superarroz/Vistahermosa):</label>
+                <input type="number" class="calc" id="empaques" placeholder="0">
+            </div>
+        </div>
+
+        <div class="resultado-box">
+            <div class="total-label">Costo Total de la Operación</div>
+            <div id="totalFinal" class="total-valor">$ 0</div>
+        </div>
+
     </div>
 
     <script>
@@ -142,24 +141,24 @@
         function actualizarReloj() {
             const ahora = new Date();
             const h = ahora.toLocaleTimeString('es-CO', { timeZone: 'America/Bogota', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
-            const f = ahora.toLocaleDateString('es-CO', { timeZone: 'America/Bogota', weekday: 'short', day: 'numeric', month: 'short' });
+            const f = ahora.toLocaleDateString('es-CO', { timeZone: 'America/Bogota', weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' });
             document.getElementById('hora').innerText = h;
             document.getElementById('fecha').innerText = f;
         }
         setInterval(actualizarReloj, 1000);
         actualizarReloj();
 
-        // LÓGICA DE CÁLCULO
-        function calcular() {
-            const v1 = parseFloat(document.getElementById('manoObra').value) || 0;
-            const v2 = parseFloat(document.getElementById('insumos').value) || 0;
-            const v3 = parseFloat(document.getElementById('empaque').value) || 0;
-            const v4 = parseFloat(document.getElementById('logistica').value) || 0;
-
-            const total = v1 + v2 + v3 + v4;
-            
-            document.getElementById('totalCostos').innerText = '$ ' + total.toLocaleString('es-CO');
-        }
+        // LÓGICA DE SUMA AUTOMÁTICA
+        const inputs = document.querySelectorAll('.calc');
+        inputs.forEach(input => {
+            input.addEventListener('input', () => {
+                let total = 0;
+                inputs.forEach(i => {
+                    total += parseFloat(i.value) || 0;
+                });
+                document.getElementById('totalFinal').innerText = '$ ' + total.toLocaleString('es-CO');
+            });
+        });
     </script>
 </body>
 </html>
